@@ -1,14 +1,16 @@
 #include "Cell.hpp"
 
 // , const char candy_image
-Cell::Cell (Point center, int w, int h, char *candy_image) :
+Cell::Cell (Point center, int w, int h, std::string color) :
     r (center, w, h, FL_BLACK, FL_WHITE),
-    ca (center, w, h, candy_image),
-    bomb{rand() % 8 == 0} {}
+    ca (center, w, h, color),
+    bomb{rand () % 8 == 0}
+{}
 // textNeighborBombCount("", center, h/2)
 
-Cell::Cell (const Cell &c):
-    r{c.r}, ca{c.ca}, bomb{rand () % 8 == 0} {}
+Cell::Cell (const Cell &c) :
+    r{c.r}, ca{c.ca}, bomb{rand () % 8 == 0}
+{}
 
 void Cell::draw ()
 {

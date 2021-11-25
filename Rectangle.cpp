@@ -24,6 +24,7 @@ void Rectangle::setFrameColor (Fl_Color newFrameColor)
 
 bool Rectangle::contains (Point p)
 {
+  std::cout << "x = " << p.x << "  et y = " << p.y << "  c_x = " << center.x << " c_yHN = " << center.y << endl;
   return p.x >= center.x - w / 2 &&
          p.x < center.x + w / 2 &&
          p.y >= center.y - h / 2 &&

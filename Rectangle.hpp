@@ -1,6 +1,8 @@
 #include <FL/Fl.H>
 #include <FL/fl_draw.H>
 #include "Candy.hpp"
+#include <iostream>
+using namespace std;
 
 
 
@@ -14,32 +16,39 @@ class Rectangle {
   int w, h;
   Fl_Color fillColor, frameColor;
  public:
-  Rectangle(Point center, int w, int h,
-            Fl_Color frameColor = FL_BLACK,
-            Fl_Color fillColor = FL_WHITE);
-  void draw();
-  void setFillColor(Fl_Color newFillColor);
-  Fl_Color getFillColor() {
+  Rectangle (Point center, int w, int h,
+             Fl_Color frameColor = FL_BLACK,
+             Fl_Color fillColor = FL_WHITE);
+  void draw ();
+  void setFillColor (Fl_Color newFillColor);
+  Fl_Color getFillColor ()
+  {
     return fillColor;
   }
-  void setFrameColor(Fl_Color newFrameColor);
-  Fl_Color getFrameColor() {
+  void setFrameColor (Fl_Color newFrameColor);
+  Fl_Color getFrameColor ()
+  {
     return frameColor;
   }
-  void setWidth(int neww) {
+  void setWidth (int neww)
+  {
     w = neww;
   }
-  void setHeight(int newh) {
+  void setHeight (int newh)
+  {
     h = newh;
   }
-  int getWidth() {
+  int getWidth ()
+  {
     return w;
   }
-  int getHeight() {
+  int getHeight ()
+  {
     return h;
   }
-  bool contains(Point p);
-  Point getCenter() {
+  bool contains (Point p);
+  Point getCenter ()
+  {
     return center;
   }
 };
