@@ -1,53 +1,46 @@
 #include "Cell.hpp"
 
-// , const char candy_image
-Cell::Cell (Point center, int w, int h, std::string color) :
-    r (center, w, h, FL_BLACK, FL_WHITE),
-    ca (center, w, h, color),
-    bomb{rand () % 8 == 0}
-{}
-// textNeighborBombCount("", center, h/2)
+Cell::Cell (Point center, int w, int h, string color) :
+    center{center}, w{w}, h{h}, color{color}
+    {
+      initialize();
+    }
 
-Cell::Cell (const Cell &c) :
-    r{c.r}, ca{c.ca}, bomb{rand () % 8 == 0}
-{}
+void Cell::initialize ()
+{
+  std::map<std::string , std::string> candy_d = {{"blue", "tile004.png",},
+                                                 {"red", "tile000.png",},
+                                                 {"green", "tile003.png",},
+                                                 {"yellow", "tile002.png",},
+                                                 {"orange", "tile001.png",},
+                                                 {"purple", "tile005.png",}};
+
+
+  square= new Square(FL_BORDER_BOX, center.x, center.y, w, h, "");
+  file_image = &candy_d.find (color)->second[0];
+  candy = new Candy(file_image);
+}
+
 
 void Cell::draw ()
 {
-  r.setFillColor (FL_WHITE);
-  r.draw ();
-  ca.draw ();
-  // textNeighborBombCount.setString(to_string(neighborBombCount()));
-  // textNeighborBombCount.draw();
+
+  square->image(candy);
 
 }
 
 void Cell::mouseMove (Point mouseLoc)
 {
-  if (r.contains (mouseLoc))
-    {
-      r.setFrameColor (FL_RED);
-    }
-  else
-    {
-      r.setFrameColor (FL_BLACK);
-    }
+
 }
 
 void Cell::mouseClick (Point mouseLoc)
 {
-  if (r.contains (mouseLoc))
-    {
-      // makeVisible();
-    }
+  if (square->contains (mouseLoc))
+    deleting();
 }
-
-int Cell::neighborBombCount ()
+void Cell::deleting ()
 {
-  int bombCount = 0;
-  for (auto &neighbor: neighbors)
-    if (neighbor->isBomb ())
-      bombCount++;
-  return bombCount;
+  square->position (200, 100);
 }
 

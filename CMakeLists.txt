@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -Wall -Werror")
 
-add_executable(CandyCrush main.cpp Candy.cpp Cell.cpp controller.cpp Grid.cpp model.cpp Rectangle.cpp view.cpp Canvas.cpp)
+add_executable(CandyCrush main.cpp Candy.cpp Cell.cpp controller.cpp model.cpp Square.cpp view.cpp Canvas.cpp)
 #add_executable(CandyCrush Image_Candy.cpp)
 
 set(CMAKE_BINARY_DIR ${PROJECT_BINARY_DIR}/cmake-bin)

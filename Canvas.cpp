@@ -18,7 +18,7 @@ void Canvas::initialize ()
           std::vector <string> color_vect {"blue", "red", "orange", "yellow", "green", "purple"};
           std::string color = color_vect[rand() % color_vect.size()];
 
-          cells[x].push_back ({{90 * x + 50, 90 * y + 50}, 100, 100, color});
+          cells[x].push_back ({{75 * x + 80, 75 * y + 80}, 75, 75, color});
         }
     }
 
@@ -50,30 +50,6 @@ void Canvas::initialize ()
       }
 }
 
-bool Canvas::bombExposed ()
-{
-  // Is there a cell with a bomb that is exposed?
-  for (auto &v: cells)
-    for (auto &c: v)
-      if (c.isVisible () && c.isBomb ())
-        return true;
-  return false;
-}
-
-bool Canvas::solved ()
-{
-  // Are all cells without bombs visible?
-  for (auto &v: cells)
-    for (auto &c: v)
-      {
-        if (c.isVisible () && c.isBomb ())
-          return false;
-        if (!c.isVisible () && !c.isBomb ())
-          return false;
-      }
-  return true;
-}
-
 void Canvas::draw ()
 {
   for (auto &v: cells)
@@ -81,12 +57,6 @@ void Canvas::draw ()
       {
         c.draw ();
       }
-  // We need to check to see if we need to draw game over or you win
-//   if (bombExposed())
-//     textGameOver.draw();
-//   if (solved()) {
-//     textYouWin.draw();
-//   }
 }
 
 void Canvas::mouseMove (Point mouseLoc)
@@ -98,13 +68,9 @@ void Canvas::mouseMove (Point mouseLoc)
 
 void Canvas::mouseClick (Point mouseLoc)
 {
-  // We only respond to mouse clicks if the game is not over/won
-  if (!bombExposed () && !solved ())
-    {
-      for (auto &v: cells)
-        for (auto &c: v)
-          c.mouseClick (mouseLoc);
-    }
+  for (auto &v: cells)
+    for (auto &c: v)
+      c.mouseClick(mouseLoc);
 }
 
 void Canvas::keyPressed (int keyCode)
@@ -115,4 +81,8 @@ void Canvas::keyPressed (int keyCode)
       break;
       case 'q':exit (0);
     }
+}
+vector<Cell *> Canvas::neighbors (int x, int y)
+{
+  return vector<Cell *> ();
 }

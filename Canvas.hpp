@@ -7,15 +7,13 @@ class Canvas {
 //   Text textYouWin{"You Win!", {250, 250}, 90, FL_GREEN};
   vector<vector<Cell> > cells;
   vector<Cell *> neighbors (int x, int y);
-  int neighborBombCount (int x, int y);
   void initialize ();
  public:
   Canvas ()
   {
     initialize ();
   }
-  bool bombExposed ();
-  bool solved ();
+
   void draw ();
   void mouseMove (Point mouseLoc);
   void mouseClick (Point mouseLoc);
