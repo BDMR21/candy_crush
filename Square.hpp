@@ -12,11 +12,12 @@ struct Point {
 
 
 class Square: public Fl_Box {
-  Point center;
-  int w, h;
+//  Point center;
+//  int w, h;
 
  public:
   Square (Fl_Boxtype b, int x, int y, int w, int h, const char *l);
+  Point get_position() const;
 
   bool contains (Point p) const;
 };

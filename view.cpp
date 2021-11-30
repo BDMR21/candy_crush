@@ -1,7 +1,7 @@
 #include "Canvas.hpp"
 
-const int windowWidth = 820;
-const int windowHeight = 820;
+const int windowWidth = 720;
+const int windowHeight = 720;
 const double refreshPerSecond = 60;
 
 class MainWindow : public Fl_Window {

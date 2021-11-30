@@ -6,6 +6,7 @@ class Canvas {
 //   Text textGameOver{"Game Over", {250, 250}, 90, fl_rgb_color(255, 0, 255)};
 //   Text textYouWin{"You Win!", {250, 250}, 90, FL_GREEN};
   vector<vector<Cell> > cells;
+  vector<Cell *> selected;
   vector<Cell *> neighbors (int x, int y);
   void initialize ();
  public:
@@ -18,4 +19,5 @@ class Canvas {
   void mouseMove (Point mouseLoc);
   void mouseClick (Point mouseLoc);
   void keyPressed (int keyCode);
+  void check(Cell * c);
 };

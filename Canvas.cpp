@@ -18,7 +18,8 @@ void Canvas::initialize ()
           std::vector <string> color_vect {"blue", "red", "orange", "yellow", "green", "purple"};
           std::string color = color_vect[rand() % color_vect.size()];
 
-          cells[x].push_back ({{75 * x + 80, 75 * y + 80}, 75, 75, color});
+          cells[x].push_back ({{80 * x, 80 * y}, 80, 80, color});
+//          cells[x].push_back ({{50 * x + 25, 50 * y + 25}, 40, 40, color});
         }
     }
 
@@ -29,13 +30,9 @@ void Canvas::initialize ()
         vector<Cell *> neighbors;
         for (auto &shift: vector<Point> ({
                                              {-1, 0}, // The 8 neighbors relative to the cell
-                                             {-1, 1},
                                              {0, 1},
-                                             {1, 1},
                                              {1, 0},
-                                             {1, -1},
                                              {0, -1},
-                                             {-1, -1},
                                          }))
           {
             int neighborx = x + shift.x;
@@ -70,7 +67,11 @@ void Canvas::mouseClick (Point mouseLoc)
 {
   for (auto &v: cells)
     for (auto &c: v)
-      c.mouseClick(mouseLoc);
+      {
+        c.mouseClick (mouseLoc);
+        check(&c);
+//        selected.push_back (&c);
+      }
 }
 
 void Canvas::keyPressed (int keyCode)
@@ -85,4 +86,19 @@ void Canvas::keyPressed (int keyCode)
 vector<Cell *> Canvas::neighbors (int x, int y)
 {
   return vector<Cell *> ();
+}
+void Canvas::check (Cell * c)
+{
+    if (c->is_selected()){
+      selected.push_back (c);
+      c->unselect();
+    }
+
+    if (selected.size() == 2){
+//        Cell save = reinterpret_cast<Cell &>(selected[0]);
+        Point save{selected[0]->get_center().x, selected[0]->get_center().y};
+        selected[0]->reposition(selected[1]->get_center());
+        selected[1]->reposition(save);
+        selected.clear();
+    }
 }
