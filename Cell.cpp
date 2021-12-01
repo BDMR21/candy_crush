@@ -88,5 +88,16 @@ vector<Cell *> Cell::get_Neighbors ()
 {
   return neighbors;
 }
+void Cell::myNeighbors (Cell *c)
+{
+  for (auto &neighbor : neighbors)
+    {
+      auto n_tochange = neighbor->get_Neighbors();
+      n_tochange.erase (remove(n_tochange.begin(), n_tochange.end(), c), n_tochange.end());
+      n_tochange.push_back (this);
+      neighbor->setNeighbors (n_tochange);
+    }
+
+}
 
 

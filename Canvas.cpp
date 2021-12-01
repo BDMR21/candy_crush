@@ -97,15 +97,20 @@ void Canvas::check (Cell * c)
         selected[1]->reposition(save_center);
 
         vector<Cell *> save_neighbors0 = selected[0]->get_Neighbors();
-        save_neighbors0.push_back (selected[0]);
-        remove (save_neighbors0.begin(), save_neighbors0.end(), selected[1]);
-
         vector<Cell *> save_neighbors1 = selected[1]->get_Neighbors();
+
+        save_neighbors0.push_back (selected[0]);
+        save_neighbors0.erase (remove (save_neighbors0.begin(), save_neighbors0.end(), selected[1]), save_neighbors0.end());
+
         save_neighbors1.push_back (selected[1]);
-        remove (save_neighbors1.begin(), save_neighbors1.end(), selected[0]);
+        save_neighbors1.erase (remove (save_neighbors1.begin(), save_neighbors1.end(), selected[0]), save_neighbors1.end());
 
         selected[0]->setNeighbors (save_neighbors1);
         selected[1]->setNeighbors (save_neighbors0);
+
+        selected[0]->myNeighbors (selected[1]);
+        selected[1]->myNeighbors (selected[0]);
+
         selected.clear();
 
     }
