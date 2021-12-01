@@ -46,4 +46,6 @@ class Cell {
     neighbors = newNeighbors;
   }
 
+  bool is_neighbor(Cell * cell) const;
+
 };
