@@ -45,14 +45,16 @@ void Canvas::initialize ()
     }
 }
 
-void Canvas::draw ()
-{
-  for (auto &v: cells)
-    for (auto &c: v)
-      {
-        c.draw ();
-      }
-}
+
+//##REUSE IF NECESSARY
+//void Canvas::draw ()
+//{
+//  for (auto &v: cells)
+//    for (auto &c: v)
+//      {
+//        c.draw ();
+//      }
+//}
 
 void Canvas::mouseMove (Point mouseLoc)
 {
@@ -90,10 +92,22 @@ void Canvas::check (Cell * c)
     }
 
     if ((selected.size() == 2) && (selected[0]->is_neighbor (selected[1]))){
-        Point save{selected[0]->get_center().x, selected[0]->get_center().y};
+        Point save_center{selected[0]->get_center().x, selected[0]->get_center().y};
         selected[0]->reposition(selected[1]->get_center());
-        selected[1]->reposition(save);
+        selected[1]->reposition(save_center);
+
+        vector<Cell *> save_neighbors0 = selected[0]->get_Neighbors();
+        save_neighbors0.push_back (selected[0]);
+        remove (save_neighbors0.begin(), save_neighbors0.end(), selected[1]);
+
+        vector<Cell *> save_neighbors1 = selected[1]->get_Neighbors();
+        save_neighbors1.push_back (selected[1]);
+        remove (save_neighbors1.begin(), save_neighbors1.end(), selected[0]);
+
+        selected[0]->setNeighbors (save_neighbors1);
+        selected[1]->setNeighbors (save_neighbors0);
         selected.clear();
+
     }
     else if ((selected.size() == 2) && (!selected[0]->is_neighbor (selected[1]))){
       selected.clear();

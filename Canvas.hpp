@@ -15,7 +15,7 @@ class Canvas {
     initialize ();
   }
 
-  void draw ();
+//  void draw ();   ##REUSE IF NECESSARY
   void mouseMove (Point mouseLoc);
   void mouseClick (Point mouseLoc);
   void keyPressed (int keyCode);

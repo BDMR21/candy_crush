@@ -72,9 +72,21 @@ Point Cell::get_center() const
 {
   return square->get_position();
 }
+
+
 bool Cell::is_neighbor (Cell *cell) const
 {
   return find (neighbors.begin(), neighbors.end(), cell) != neighbors.end();
+}
+
+
+void Cell::setNeighbors (const vector<Cell *> &newNeighbors)
+{
+  neighbors = newNeighbors;
+}
+vector<Cell *> Cell::get_Neighbors ()
+{
+  return neighbors;
 }
 
 

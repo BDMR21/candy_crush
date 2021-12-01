@@ -41,10 +41,9 @@ class Cell {
 
 
   // Used to initalize neighbors after all cells are created
-  void setNeighbors (const vector<Cell *> &newNeighbors)
-  {
-    neighbors = newNeighbors;
-  }
+  void setNeighbors (const vector<Cell *> &newNeighbors);
+
+  vector<Cell *> get_Neighbors();
 
   bool is_neighbor(Cell * cell) const;
 

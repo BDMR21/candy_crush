@@ -15,7 +15,7 @@ class MainWindow : public Fl_Window {
   void draw () override
   {
     Fl_Window::draw ();
-    canvas.draw ();
+//    canvas.draw (); ##REUSE IF NECESSARY
   }
   int handle (int event) override
   {
