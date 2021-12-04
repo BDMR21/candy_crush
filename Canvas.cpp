@@ -1,7 +1,80 @@
 #include "Canvas.hpp"
 
+
+void Canvas::check_image(int x, int y){
+  string color = colors_grid[x][y];
+  int col = 0;
+  int row = 0;
+  std::vector <string> color_vect {"blue", "red", "orange", "yellow", "green", "purple"};
+  std::string new_color = color;
+  // horizontal vers la droite
+  int i = x+1;
+  while (i < 9 && color == colors_grid[i][y])
+  {
+    col++;
+    i++;
+  }
+  // horizontal vers la gauche
+  i = x;
+  while (i >= 0 && color == colors_grid[i][y])
+  {
+    col++;
+    i--;
+  }
+  // vertical vers le haut
+  int j = y+1;
+  while (j < 9 && color == colors_grid[x][j])
+  {
+    row++;
+    j++;
+  }
+  // vertical vers le bas
+  j = y;
+  while (j >= 0 && color == colors_grid[x][j])
+  {
+    if (color == colors_grid[x][j])
+    {
+      row++;
+      j--;
+    }
+  }
+  if (col > 2 || row > 2)
+  {
+    while (color == new_color)
+    {
+      new_color = color_vect[rand() % color_vect.size()];
+    } 
+  }
+  if (new_color != color)
+  {
+    colors_grid[x][y] = new_color;
+  }
+  
+}
+
+void Canvas::cells_color(){
+  for (int i = 0; i < 9; i++)
+  {
+    colors_grid.emplace_back ();
+    for (int j = 0; j < 9; j++)
+    {
+      std::vector <string> color_vect {"blue", "red", "orange", "yellow", "green", "purple"};
+      std::string color = color_vect[rand() % color_vect.size()];
+      colors_grid[i].push_back(color);
+    }}
+    
+  for (int i = 0; i < 9; i++)
+  {
+    for (int j = 0; j < 9; j++)
+    {
+      check_image(i, j);
+    }
+  }
+}
+
 void Canvas::initialize ()
 {
+  cells_color();
   // This is called by the constructor but also by keyPressed to
   // reset whenver spacebar is called.
 
@@ -15,9 +88,9 @@ void Canvas::initialize ()
     for (int y = 0; y < 9; y++)
       {
         std::vector <string> color_vect {"blue", "red", "orange", "yellow", "green", "purple"};
-        std::string color = color_vect[rand() % color_vect.size()];
-
-        cells[x].push_back ({{80 * x, 80 * y}, 80, 80, color});
+        std::string color = colors_grid[x][y];
+        
+        cells[x].push_back ({{x * 80, y * 80}, 80, 80, color});
       }
   }
 
@@ -83,19 +156,144 @@ void Canvas::keyPressed (int keyCode)
     }
 }
 
+void Canvas::set_matrice(Cell c){
+  int i = c.get_center().x/80;
+  int j = c.get_center().y/80;
+  cells[i][j] = c;
+}
+
+void Canvas::are_aligned(Cell c){
+  horizontally_aligned.push_back(c);
+  vertically_aligned.push_back(c);
+  int i = c.get_center().x/80;
+  int j = c.get_center().y/80;
+  string color_c = c.get_color();
+  vector<Cell> horizontal_cells = cells[i];
+
+  cout << "debut" << endl;
+  cout << c.get_center().x << " " << c.get_center().y << "x=" << i << "y=" << j << endl;
+  cout << c.get_color() << endl;
+  cout << " " << endl;
+
+
+  // vertical vers le haut
+  j++;
+  while (j < 9 && cells[i][j].get_color() == c.get_color())
+  {
+    //cout << "i =" << i << endl;
+    horizontally_aligned.push_back(cells[i][j]);
+    cout << "x=" << cells[i][j].get_center().x/80 << "y=" << cells[i][j].get_center().y/80 << endl;
+    cout << cells[i][j].get_color() << endl;
+    cout << " " << endl;
+    j++;
+  }
+  j = c.get_center().y/80;
+
+  // vertical vers le bas
+  j--;
+  while (j >= 0 && cells[i][j].get_color() == c.get_color())
+  {
+    //cout << "i1 =" << i << endl;
+    horizontally_aligned.push_back(cells[i][j]);
+    cout << "x=" << cells[i][j].get_center().x/80 << "y=" << cells[i][j].get_center().y/80 << endl;
+    cout << cells[i][j].get_color() << endl;
+    cout << " " << endl;
+    j--;
+  }
+
+  j = c.get_center().y/80;
+  // horizontal vers la droite
+  i++;
+  while (i < 9 && cells[i][j].get_color() == c.get_color())
+  {
+    //cout << "i =" << i << endl;
+    vertically_aligned.push_back(cells[i][j]);
+    cout << "x=" << cells[i][j].get_center().x/80 << "y=" << cells[i][j].get_center().y/80 << endl;
+    cout << cells[i][j].get_color() << endl;
+    cout << " " << endl;
+    i++;
+  }
+  i = c.get_center().x/80;
+
+  // horizontal vers la gauche
+  i--;
+  while (i >= 0 && cells[i][j].get_color() == c.get_color())
+  {
+    //cout << "i1 =" << i << endl;
+    vertically_aligned.push_back(cells[i][j]);
+    cout << "x=" << cells[i][j].get_center().x/80 << "y=" << cells[i][j].get_center().y/80 << endl;
+    cout << cells[i][j].get_color() << endl;
+    cout << " " << endl;
+    i--;
+  }
+  
+  cout << "oo =" << horizontally_aligned.size() << endl;
+  cout << "aa =" << vertically_aligned.size() << endl;
+  if (horizontally_aligned.size() >= 3)
+  {
+    for (int x = 0; x < horizontally_aligned.size(); x++){
+      int x_ = horizontally_aligned[x].get_center().x/80;
+      int y_ = horizontally_aligned[x].get_center().y/80;
+      cout << "x =" << horizontally_aligned[x].get_center().x/80 << "y=" << horizontally_aligned[x].get_center().y/80 << endl;
+      cells[x_][y_].reposition({1000, 1000});
+    }
+  }
+
+  cout << "------------------------" << endl;
+  
+  if (vertically_aligned.size() >= 3)
+  {
+    for (int x = 0; x < vertically_aligned.size(); x++){
+      int x_ = vertically_aligned[x].get_center().x/80;
+      int y_ = vertically_aligned[x].get_center().y/80;
+      cout << "x =" << vertically_aligned[x].get_center().x/80 << "y=" << vertically_aligned[x].get_center().y/80 << endl;
+      cells[x_][y_].reposition({1000, 1000});
+    }
+  }
+    
+  horizontally_aligned.clear();
+  vertically_aligned.clear();
+}
 
 void Canvas::check (Cell * c)
-{
+{ 
     if (c->is_selected()){
+      // cout << c->get_center().x << " " << c->get_center().y << "x=" << c->get_center().x/80 << "y=" << c->get_center().y/80 << endl;
+      // cout << c->get_color() << endl;
+      // cout << " " << endl;
+
+      // cout << "debut" << endl;
+      // cout << c->get_center().x << " " << c->get_center().y << "x=" << c->get_center().x/80 << "y=" << c->get_center().y/80 << endl;
+      // cout << c->get_color() << endl;
+      // cout << "---------------------------------" << endl;
+      //cout << c->get_center().x << " " << c->get_center().y << " " << c->get_center().x/80 << endl;
       selected.push_back (c);
       c->unselect();
     }
 
     if ((selected.size() == 2) && (selected[0]->is_neighbor (selected[1]))){
         Point save_center{selected[0]->get_center().x, selected[0]->get_center().y};
+        string save_color = selected[0]->get_color();
         selected[0]->reposition(selected[1]->get_center());
+        selected[0]->set_center(selected[1]->get_center());
+        //selected[0]->set_color(selected[1]->get_color());
         selected[1]->reposition(save_center);
+        selected[1]->set_center(save_center);
+        //selected[1]->set_color(save_color);
+        Cell *c0 = selected[0];
+        Cell *c1 = selected[1];
 
+        int i1 = selected[1]->get_center().x/80;
+        int j1 = selected[1]->get_center().y/80;
+        
+        int i0 = selected[0]->get_center().x/80;
+        int j0 = selected[0]->get_center().y/80;
+
+        Cell sauv = cells[i1][j1];
+        cells[i1][j1] = cells[i0][j0];
+        cells[i0][j0] = sauv;
+        
+      
         vector<Cell *> save_neighbors0 = selected[0]->get_Neighbors();
         vector<Cell *> save_neighbors1 = selected[1]->get_Neighbors();
 
@@ -110,6 +308,8 @@ void Canvas::check (Cell * c)
 
         selected[0]->myNeighbors (selected[1]);
         selected[1]->myNeighbors (selected[0]);
+        
+        are_aligned(cells[i0][j0]);
 
         selected.clear();
 
