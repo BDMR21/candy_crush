@@ -11,6 +11,7 @@ class Cell {
   Point center;
   int w, h;
   bool selected = false;
+  int * counter;
 
   Square *square = nullptr;
   Candy *candy = nullptr;
@@ -25,21 +26,23 @@ class Cell {
  public:
   // Constructor
   Cell (Point center, int w, int h, std::string color);
+  ~Cell();
 //  Cell (Cell const &c);
   void initialize();
   string get_color();
   void set_color(string new_color);
 
   // Methods that draw and handle events
-  void draw ();
+//  void draw ();
   void mouseMove (Point mouseLoc);
   void mouseClick(Point mouseLoc);
-  bool is_selected() const;
+  [[nodiscard]] bool is_selected() const;
   void unselect();
 //  void mouseClick (Point mouseLoc);
 //  void deleting();
   void reposition(Point p);
-  Point get_center() const;
+  [[nodiscard]] Point get_center() const;
+  string get_color() const;
   void set_center(Point new_center);
 
 

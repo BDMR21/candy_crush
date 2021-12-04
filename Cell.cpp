@@ -28,10 +28,10 @@ void Cell::initialize ()
 }
 
 
-void Cell::draw ()
-{
-
-}
+//void Cell::draw ()
+//{
+//
+//}
 
 string Cell::get_color(){
   return color;
@@ -87,7 +87,7 @@ Point Cell::get_center() const
 }
 
 
-bool Cell::is_neighbor (Cell *cell) const
+bool Cell::is_neighbor (Cell * cell) const
 {
   return find (neighbors.begin(), neighbors.end(), cell) != neighbors.end();
 }
@@ -106,11 +106,18 @@ void Cell::myNeighbors (Cell *c)
   for (auto &neighbor : neighbors)
     {
       auto n_tochange = neighbor->get_Neighbors();
-      n_tochange.erase (remove(n_tochange.begin(), n_tochange.end(), c), n_tochange.end());
-      n_tochange.push_back (this);
+      std::replace(n_tochange.begin(), n_tochange.end(), c, this);
       neighbor->setNeighbors (n_tochange);
     }
 
+}
+string Cell::get_color () const
+{
+  return color;
+}
+Cell::~Cell ()
+{
+  cout << "destruct" << endl;
 }
 
 
