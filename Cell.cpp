@@ -33,6 +33,19 @@ void Cell::draw ()
 
 }
 
+string Cell::get_color(){
+  return color;
+}
+
+void Cell ::set_color(string new_color){
+  color = new_color;
+}
+
+void Cell ::set_center(Point new_center){
+  center.x = new_center.x;
+  center.y = new_center.y;
+}
+
 void Cell::mouseMove (Point mouseLoc)
 {
   if (square->contains(mouseLoc)) {
@@ -70,7 +83,7 @@ void Cell::unselect ()
 
 Point Cell::get_center() const
 {
-  return square->get_position();
+  return center;
 }
 
 

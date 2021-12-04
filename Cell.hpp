@@ -27,6 +27,8 @@ class Cell {
   Cell (Point center, int w, int h, std::string color);
 //  Cell (Cell const &c);
   void initialize();
+  string get_color();
+  void set_color(string new_color);
 
   // Methods that draw and handle events
   void draw ();
@@ -38,6 +40,7 @@ class Cell {
 //  void deleting();
   void reposition(Point p);
   Point get_center() const;
+  void set_center(Point new_center);
 
 
   // Used to initalize neighbors after all cells are created
