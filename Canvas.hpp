@@ -12,8 +12,14 @@ class Canvas {
   vector<Cell> vertically_aligned;
   void check(Cell * c);
   void initialize ();
+<<<<<<< HEAD
+  bool are_aligned(Cell c);
+  void set_matrice(Cell);
+  void delete_alignment();
+=======
   void are_aligned(Cell c);
   void set_matrice(Cell);
+>>>>>>> 8aacc58884fa8c833906fbe2d37b6d23cefe4d83
  public:
   Canvas ()
   {
