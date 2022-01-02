@@ -1,11 +1,11 @@
-#include "Canvas.hpp"
+#include "Board.hpp"
 
 const int windowWidth = 720;
 const int windowHeight = 720;
 const double refreshPerSecond = 60;
 
 class MainWindow : public Fl_Window {
-  Canvas canvas;
+  Board canvas;
  public:
   MainWindow () : Fl_Window (500, 500, windowWidth, windowHeight, "Candy Crush by giant_b")
   {
